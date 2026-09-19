@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://yqkcqk4bwk8d"]
+
+[ext_resource type="Script" uid="uid://by0bk5y6om64t" path="res://Scripts/key.gd" id="1_udxw8"]
+[ext_resource type="Texture2D" uid="uid://ci21f16k3uuxu" path="res://Assets/Images/Items/Key.png" id="1_ut0wq"]
+[ext_resource type="AudioStream" uid="uid://prw8bjhpu5uh" path="res://Assets/Audios/Key_Pickup.wav" id="3_brn0f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77wvw"]
+size = Vector2(14, 9)
+
+[node name="Key" type="Area2D" unique_id=1350935560]
+scale = Vector2(5, 5)
+collision_mask = 3
+script = ExtResource("1_udxw8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2135751996]
+texture = ExtResource("1_ut0wq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=579712909]
+shape = SubResource("RectangleShape2D_77wvw")
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="." unique_id=2132269546]
+stream = ExtResource("3_brn0f")

@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://do2d2kyj1utam"]
+
+[ext_resource type="Script" uid="uid://cja0h6tr2xvxq" path="res://Scripts/controls_overlay.gd" id="1_shopd"]
+[ext_resource type="Texture2D" uid="uid://cafivgyvx84bp" path="res://Assets/Images/UI/controls/KeyA.png" id="2_3h87t"]
+[ext_resource type="Texture2D" uid="uid://wgsqjlsfmduu" path="res://Assets/Images/UI/controls/KeyD.png" id="3_rfa7q"]
+[ext_resource type="Texture2D" uid="uid://bf0pb5wki1ea8" path="res://Assets/Images/UI/controls/KeyS.png" id="4_ykgyh"]
+[ext_resource type="Texture2D" uid="uid://c0gyx2py8divr" path="res://Assets/Images/UI/controls/KeyW.png" id="5_awx85"]
+[ext_resource type="Texture2D" uid="uid://b1me5xurltfsd" path="res://Assets/Images/UI/controls/KeySpace.png" id="6_okafh"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=94450380]
+follow_viewport_enabled = true
+script = ExtResource("1_shopd")
+
+[node name="Control" type="Control" parent="." unique_id=830754359]
+clip_contents = true
+layout_mode = 3
+anchor_left = -0.49800003
+anchor_top = -0.499
+anchor_right = 0.50200003
+anchor_bottom = 0.50100005
+offset_left = 0.44006348
+offset_top = 0.27999878
+offset_right = 0.4399414
+offset_bottom = 0.27996826
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=959861288]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.275
+anchor_right = 1.0020001
+anchor_bottom = 1.0
+offset_left = -7.0
+offset_right = -0.5600586
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5019608)
+
+[node name="Control" type="Control" parent="Control" unique_id=1845402707]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="KeyA" type="Sprite2D" parent="Control/Control" unique_id=864548347]
+position = Vector2(-242, 101)
+scale = Vector2(6, 6)
+texture = ExtResource("2_3h87t")
+
+[node name="KeyD" type="Sprite2D" parent="Control/Control" unique_id=1070643597]
+position = Vector2(-363, 100)
+scale = Vector2(6, 6)
+texture = ExtResource("3_rfa7q")
+
+[node name="KeyS" type="Sprite2D" parent="Control/Control" unique_id=1311735711]
+position = Vector2(-480, 103)
+scale = Vector2(6, 6)
+texture = ExtResource("4_ykgyh")
+
+[node name="KeyW" type="Sprite2D" parent="Control/Control" unique_id=144049369]
+position = Vector2(-366.00003, -14)
+scale = Vector2(6, 6)
+texture = ExtResource("5_awx85")
+
+[node name="KeySpace" type="Sprite2D" parent="Control/Control" unique_id=814280304]
+position = Vector2(292, 71)
+scale = Vector2(6, 6)
+texture = ExtResource("6_okafh")

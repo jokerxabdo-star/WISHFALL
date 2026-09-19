@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dk83jgq3hnhid"]
+
+[ext_resource type="Script" uid="uid://ctunrhwxlthpx" path="res://Scripts/enemy_health_bar.gd" id="1_qay8w"]
+[ext_resource type="Texture2D" uid="uid://ce0ccmuwektdk" path="res://Assets/Images/UI/HealthBar/LifeBarMiniUnder.png" id="2_wjrfg"]
+[ext_resource type="Texture2D" uid="uid://cul6hgjy8cwn4" path="res://Assets/Images/UI/HealthBar/LifeBarMiniProgress.png" id="3_ap322"]
+
+[node name="Enemy_HealthBar" type="Control" unique_id=1775026716]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_qay8w")
+
+[node name="HealthUnder" type="Sprite2D" parent="." unique_id=9152769]
+texture = ExtResource("2_wjrfg")
+centered = false
+
+[node name="DamageBar" type="Sprite2D" parent="." unique_id=344640987]
+texture = ExtResource("3_ap322")
+centered = false
+region_enabled = true
+
+[node name="Health" type="Sprite2D" parent="." unique_id=1112710926]
+texture = ExtResource("3_ap322")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 18, 4)
+
+[node name="Timer" type="Timer" parent="." unique_id=1111622298]
+wait_time = 0.4
+one_shot = true

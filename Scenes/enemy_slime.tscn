@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cfqifmqw14o3j"]
+[gd_scene load_steps=29 format=3 uid="uid://cfqifmqw14o3j"]
 
 [ext_resource type="Script" uid="uid://bk6f2opdabg5f" path="res://Scripts/enemy_slime.gd" id="1_6vs72"]
 [ext_resource type="Texture2D" uid="uid://okcwllprf2y1" path="res://Assets/Images/Enemies/Slime_Green.png" id="1_15b1g"]
@@ -167,7 +167,10 @@ animations = [{
 size = Vector2(20, 19)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_15b1g"]
-radius = 100.0
+radius = 206.52179
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ujbpm"]
+size = Vector2(27, 25)
 
 [node name="Enemy_slime" type="CharacterBody2D"]
 scale = Vector2(2, 2)
@@ -197,5 +200,16 @@ pitch_scale = 1.5
 [node name="Enemy_HealthBar" parent="." instance=ExtResource("4_ujbpm")]
 position = Vector2(-9, -15)
 
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_ujbpm")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Sight" to="." method="_on_sight_body_entered"]
 [connection signal="body_exited" from="Sight" to="." method="_on_sight_body_exited"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

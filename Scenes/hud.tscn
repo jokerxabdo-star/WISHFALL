@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://b2sro0nagbvmu"]
+
+[ext_resource type="Script" uid="uid://bkm7kktgbding" path="res://Scripts/hud.gd" id="1_e0onf"]
+[ext_resource type="Texture2D" uid="uid://ch86h3onrqxl5" path="res://Assets/Images/UI/Icons/Teleport.png" id="2_t1xeu"]
+[ext_resource type="Script" uid="uid://crraycga2qq2t" path="res://Scripts/target_reticle.gd" id="3_bjfho"]
+[ext_resource type="PackedScene" uid="uid://dk83jgq3hnhid" path="res://Scenes/health_bar.tscn" id="5_36asn"]
+[ext_resource type="Texture2D" uid="uid://bspgo8opaur47" path="res://Assets/Images/UI/Icons/Dash.png" id="5_t1xeu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fccik"]
+font_size = 100
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=695922918]
+script = ExtResource("1_e0onf")
+bar_height = 80.0
+tint_color = Color(0.078431375, 0.21960784, 0.4509804, 0.23529412)
+
+[node name="TeleportOverlay" type="VBoxContainer" parent="." unique_id=485316546]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -184.17505
+offset_top = -287.83
+offset_right = -114.17505
+offset_bottom = -149.82996
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+
+[node name="TeleportCooldownBar" type="TextureProgressBar" parent="TeleportOverlay" unique_id=268691531]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+fill_mode = 4
+texture_under = ExtResource("2_t1xeu")
+texture_progress = ExtResource("2_t1xeu")
+tint_under = Color(0.33333334, 0.33333334, 0.33333334, 0.5019608)
+
+[node name="DashCooldownBar" type="TextureProgressBar" parent="TeleportOverlay" unique_id=729965778]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+fill_mode = 4
+texture_under = ExtResource("5_t1xeu")
+texture_progress = ExtResource("5_t1xeu")
+tint_under = Color(0.33333334, 0.33333334, 0.33333334, 0.5019608)
+
+[node name="TacticalOverlay" type="Control" parent="." unique_id=1704227715]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBar" type="ColorRect" parent="TacticalOverlay" unique_id=291091761]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="TacticalOverlay" unique_id=275195202]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="ScreenTint" type="ColorRect" parent="TacticalOverlay" unique_id=819254043]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.050980393, 0.13333334, 0.21960784, 0)
+
+[node name="TargetReticle" type="Node2D" parent="TacticalOverlay" unique_id=137638792]
+script = ExtResource("3_bjfho")
+
+[node name="PlayerHealthBar" parent="." unique_id=1811980489 instance=ExtResource("5_36asn")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(20, 10)
+offset_transform_enabled = true
+offset_transform_position = Vector2(-9, -10)
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1519794915]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 1)
+
+[node name="GameOver" type="Label" parent="." unique_id=2049621574]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -399.0
+offset_top = -100.0
+offset_right = 399.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_fccik")
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0

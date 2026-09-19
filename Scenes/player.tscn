@@ -2,7 +2,17 @@
 
 [ext_resource type="Script" uid="uid://1vpooxbwljyo" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bb7a4xw4xihfl" path="res://Assets/Images/Player/Player.png" id="1_v0iea"]
+[ext_resource type="Shader" uid="uid://00om62w3d8x8" path="res://Assets/Materials/player_damaged.gdshader" id="2_3smsa"]
 [ext_resource type="AudioStream" uid="uid://d1811cp5pbanq" path="res://Assets/Audios/SwingSword.wav" id="3_6t5aa"]
+[ext_resource type="AudioStream" uid="uid://bt5wd1ja1gpas" path="res://Assets/Audios/Player hurt.wav" id="4_vgqql"]
+[ext_resource type="AudioStream" uid="uid://grysbsnnoj1j" path="res://Assets/Audios/Player Dash.wav" id="5_fkybt"]
+[ext_resource type="AudioStream" uid="uid://b6u37uxi5pg14" path="res://Assets/Audios/SlowMotion.wav" id="6_x3wgy"]
+[ext_resource type="AudioStream" uid="uid://djeirmq7brwxb" path="res://Assets/Audios/Player_Walk.wav" id="8_8erm5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8erm5"]
+resource_local_to_scene = true
+shader = ExtResource("2_3smsa")
+shader_parameter/flash_red = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cvnsp"]
 atlas = ExtResource("1_v0iea")
@@ -278,7 +288,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qqcod")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"Die",
 "speed": 5.0
 }, {
@@ -494,39 +504,69 @@ animations = [{
 size = Vector2(13, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
-size = Vector2(20.25, 21)
+size = Vector2(26, 29.25)
 
-[node name="Player" type="CharacterBody2D" unique_id=13686851]
+[node name="Player" type="CharacterBody2D" unique_id=916655448]
 z_index = 1
-scale = Vector2(4, 4)
+scale = Vector2(8, 8)
+collision_layer = 2
 script = ExtResource("1_cvnsp")
+tactical_zoom_factor = 0.5
+dash_speed = 3500.0
+dash_duration = 0.3
+dash_camera_shake = 40.0
+max_speed_cap = 1000.0
+min_teleport_cooldown_cap = 1.0
+min_tactical_zoom_cap = 0.1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=761237868]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1003537794]
+material = SubResource("ShaderMaterial_8erm5")
 sprite_frames = SubResource("SpriteFrames_vq3lt")
 animation = &"Die"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=4430795]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237555011]
 position = Vector2(0.5, 4.25)
 shape = SubResource("RectangleShape2D_vgqql")
 
-[node name="SwingSword" type="AudioStreamPlayer2D" parent="." unique_id=2139486838]
-stream = ExtResource("3_6t5aa")
-pitch_scale = 3.0
-
-[node name="HitBox" type="Area2D" parent="." unique_id=1353408001]
+[node name="HitBox" type="Area2D" parent="." unique_id=640429617]
 position = Vector2(13, -6)
 collision_mask = 2
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=18602857]
-position = Vector2(-3.125, 5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=473909431]
+position = Vector2(-6, 9.125)
 shape = SubResource("RectangleShape2D_6t5aa")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=322711208]
-limit_left = 0
-limit_top = 0
-limit_right = 1920
-limit_bottom = 1100
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1277744281]
+zoom = Vector2(0.5, 0.5)
+limit_left = 200
+limit_top = 900
+limit_right = 11600
+limit_bottom = 11500
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="SwingSword" type="AudioStreamPlayer2D" parent="." unique_id=1711851987]
+stream = ExtResource("3_6t5aa")
+pitch_scale = 3.0
+
+[node name="TakeDamage" type="AudioStreamPlayer2D" parent="." unique_id=837841824]
+stream = ExtResource("4_vgqql")
+
+[node name="PlayerDash" type="AudioStreamPlayer2D" parent="." unique_id=452718541]
+stream = ExtResource("5_fkybt")
+
+[node name="SlowMotion" type="AudioStreamPlayer2D" parent="." unique_id=309248638]
+stream = ExtResource("6_x3wgy")
+volume_db = 3.5
+panning_strength = 0.45
+
+[node name="FootstepAudio" type="AudioStreamPlayer2D" parent="." unique_id=1523508542]
+stream = ExtResource("8_8erm5")
+
+[node name="DamageCoolDown" type="Timer" parent="." unique_id=1805705316]
+one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

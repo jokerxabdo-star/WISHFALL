@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cs37n115n6twm"]
+
+[ext_resource type="Script" uid="uid://dcr8ut0jsnuvp" path="res://Scripts/objective_barrier.gd" id="1_5ffgg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77wvw"]
+size = Vector2(1389, 441.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqhd7"]
+size = Vector2(230, 112)
+
+[node name="ObjectiveBarrier" type="Node2D" unique_id=1026467472]
+script = ExtResource("1_5ffgg")
+
+[node name="SolidWall" type="StaticBody2D" parent="." unique_id=722893636]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidWall" unique_id=1704473100]
+position = Vector2(-232.5, -195.25)
+shape = SubResource("RectangleShape2D_77wvw")
+
+[node name="TriggerZone" type="Area2D" parent="." unique_id=1569371622]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerZone" unique_id=475441339]
+shape = SubResource("RectangleShape2D_lqhd7")
+
+[node name="PromptLabel" type="Label" parent="." unique_id=1185950398]
+modulate = Color(1, 1, 1, 0)
+z_index = 150
+offset_left = -80.0
+offset_top = -96.0
+offset_right = 81.0
+offset_bottom = -47.0
+theme_override_colors/font_color = Color(0.8570065, 0.5952235, 0, 1)
+text = "Kill the Enemies First
+"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://du3dirhy8iabe"]
+
+[ext_resource type="Script" uid="uid://cm78nqfxlp0e4" path="res://Scripts/upgrade_menu.gd" id="1_ltp0x"]
+[ext_resource type="AudioStream" uid="uid://dcd517ttkou7q" path="res://Assets/Audios/UI Hover.wav" id="2_6gn5s"]
+[ext_resource type="AudioStream" uid="uid://67cc3ngum2o7" path="res://Assets/Audios/UI Click.wav" id="3_f5dmy"]
+[ext_resource type="AudioStream" uid="uid://bvkuya04ls3jr" path="res://Assets/Audios/UI Upgrades.wav" id="4_f5dmy"]
+
+[node name="UpgradeMenu" type="CanvasLayer" unique_id=1621455075]
+process_mode = 2
+script = ExtResource("1_ltp0x")
+decision_duration = 10.0
+
+[node name="DimBackground" type="ColorRect" parent="." unique_id=617727589]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="CardContainer" type="HBoxContainer" parent="." unique_id=1955498779]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="Card0" type="TextureButton" parent="CardContainer" unique_id=1846420788]
+custom_minimum_size = Vector2(180, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="CardContainer/Card0" unique_id=1373536445]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Card1" type="TextureButton" parent="CardContainer" unique_id=1272815843]
+custom_minimum_size = Vector2(180, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="CardContainer/Card1" unique_id=466587067]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Card2" type="TextureButton" parent="CardContainer" unique_id=1904371794]
+custom_minimum_size = Vector2(180, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="CardContainer/Card2" unique_id=663432394]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ChoiceTimerBar" type="ProgressBar" parent="." unique_id=1751784028]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -291.0
+offset_top = 61.0
+offset_right = 291.0
+offset_bottom = 88.0
+grow_horizontal = 2
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="Card Hover" type="AudioStreamPlayer" parent="." unique_id=1088018384]
+stream = ExtResource("2_6gn5s")
+volume_db = 5.0
+bus = &"UI"
+
+[node name="Card Pressed" type="AudioStreamPlayer" parent="." unique_id=321503907]
+stream = ExtResource("3_f5dmy")
+volume_db = 5.0
+bus = &"UI"
+
+[node name="Open Menu" type="AudioStreamPlayer" parent="." unique_id=583384151]
+stream = ExtResource("4_f5dmy")
+volume_db = 5.0

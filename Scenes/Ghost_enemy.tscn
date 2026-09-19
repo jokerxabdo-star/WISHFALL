@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://cx116ab7orb6o"]
+
+[ext_resource type="PackedScene" uid="uid://dewucn52sw3hs" path="res://Scenes/base_enemy.tscn" id="1_epss5"]
+[ext_resource type="Texture2D" uid="uid://hji20tk7y76a" path="res://Assets/Images/Enemies/HitGost.png" id="2_62fjw"]
+[ext_resource type="AudioStream" uid="uid://bn8aq0t2sxtfn" path="res://Assets/Audios/Ghost.wav" id="2_bfhlx"]
+[ext_resource type="Texture2D" uid="uid://bx8nges0dr4cj" path="res://Assets/Images/Enemies/IdleGost.png" id="3_a1wwr"]
+[ext_resource type="AudioStream" uid="uid://r52bykkrpymo" path="res://Assets/Audios/Ghost hit.wav" id="3_konra"]
+[ext_resource type="AudioStream" uid="uid://bgvrogy5be5t5" path="res://Assets/Audios/Ghost attack.wav" id="4_c4kas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfhlx"]
+atlas = ExtResource("2_62fjw")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_konra"]
+atlas = ExtResource("2_62fjw")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4kas"]
+atlas = ExtResource("2_62fjw")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acet7"]
+atlas = ExtResource("3_a1wwr")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cucry"]
+atlas = ExtResource("3_a1wwr")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pggf"]
+atlas = ExtResource("3_a1wwr")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txf3g"]
+atlas = ExtResource("3_a1wwr")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd7pe"]
+atlas = ExtResource("3_a1wwr")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r8a0c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfhlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_konra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4kas")
+}],
+"loop": 1,
+"name": &"Attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acet7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cucry")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pggf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txf3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wd7pe")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfhlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_konra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4kas")
+}],
+"loop": 1,
+"name": &"Run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu02v"]
+size = Vector2(50, 46)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4xijp"]
+radius = 350.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ul8lf"]
+size = Vector2(66, 66)
+
+[node name="Ghost" unique_id=574211752 instance=ExtResource("1_epss5")]
+max_health = 150
+move_speed = 500.0
+strength = 20
+knockback_force = 200.0
+attack_stop_distance = 80.0
+footstep_sound = ExtResource("2_bfhlx")
+hurt_sound = ExtResource("3_konra")
+attack_sound = ExtResource("4_c4kas")
+
+[node name="Shadow" parent="." index="0" unique_id=720723750]
+position = Vector2(0, 34.01)
+
+[node name="AnimatedSprite2D" parent="." index="1" unique_id=1941358113]
+sprite_frames = SubResource("SpriteFrames_r8a0c")
+animation = &"Run"
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=2009625396]
+shape = SubResource("RectangleShape2D_hu02v")
+
+[node name="CollisionShape2D" parent="Sight" parent_id_path=PackedInt32Array(1521868361) index="0" unique_id=211923989]
+shape = SubResource("CircleShape2D_4xijp")
+
+[node name="CollisionShape2D" parent="HitBox" parent_id_path=PackedInt32Array(1284092092) index="0" unique_id=1946106963]
+shape = SubResource("RectangleShape2D_ul8lf")
+
+[node name="Enemy_HealthBar" parent="." index="8" unique_id=1802795097]
+position = Vector2(-25.615, -52.995)
+scale = Vector2(3, 3)

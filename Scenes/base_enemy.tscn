@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dewucn52sw3hs"]
+
+[ext_resource type="Script" uid="uid://dxr52guwri2i8" path="res://Scripts/base_enemy.gd" id="1_wsate"]
+[ext_resource type="PackedScene" uid="uid://dk83jgq3hnhid" path="res://Scenes/health_bar.tscn" id="2_kjpuc"]
+[ext_resource type="AudioStream" uid="uid://bouu7l7lkpmvx" path="res://Assets/Audios/Slime.wav" id="2_t2m80"]
+
+[sub_resource type="Gradient" id="Gradient_kjpuc"]
+offsets = PackedFloat32Array(0, 0.25, 0.5740741, 1)
+colors = PackedColorArray(0.16409835, 0.16409835, 0.16409835, 0.68500006, 0.19732282, 0.19732282, 0.19732282, 0.58556455, 0.39297795, 0.39297795, 0.39297795, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t2m80"]
+gradient = SubResource("Gradient_kjpuc")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_epss5"]
+radius = 350.0
+
+[node name="BaseEnemy" type="CharacterBody2D" unique_id=574211752]
+collision_layer = 2
+script = ExtResource("1_wsate")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=720723750]
+scale = Vector2(1.024, 0.356)
+texture = SubResource("GradientTexture2D_t2m80")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1941358113]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2009625396]
+
+[node name="Sight" type="Area2D" parent="." unique_id=1521868361]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sight" unique_id=211923989]
+shape = SubResource("CircleShape2D_epss5")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=1284092092]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1946106963]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1658062929]
+
+[node name="TakeDamage" type="AudioStreamPlayer2D" parent="." unique_id=771303489]
+
+[node name="FootstepAudio" type="AudioStreamPlayer2D" parent="." unique_id=465479874]
+stream = ExtResource("2_t2m80")
+max_distance = 600.0
+
+[node name="Enemy_HealthBar" parent="." unique_id=1802795097 instance=ExtResource("2_kjpuc")]
