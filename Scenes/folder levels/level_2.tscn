@@ -24,7 +24,6 @@ tile_map_data = PackedByteArray("AAACACgADAAIAAUAAAACACkADAAIAAYAAAADACgADAAJAAU
 
 [node name="Player" parent="." index="4" unique_id=1399307819]
 position = Vector2(919, 5470)
-tactical_zoom_factor = 0.5
 max_health_cap = 500
 
 [node name="Dog" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="0" unique_id=816009069 instance=ExtResource("2_avyce")]
@@ -43,7 +42,7 @@ position = Vector2(1887, 7420.0005)
 position = Vector2(4473, 8591)
 
 [node name="Slime3" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="3" unique_id=1874359926 instance=ExtResource("3_psic3")]
-position = Vector2(5291, 7498)
+position = Vector2(4859, 7715.0005)
 
 [node name="Slime4" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="4" unique_id=954331235 instance=ExtResource("3_psic3")]
 position = Vector2(7395, 5883.0005)
@@ -51,96 +50,171 @@ position = Vector2(7395, 5883.0005)
 [node name="Slime5" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="5" unique_id=733133933 instance=ExtResource("3_psic3")]
 position = Vector2(8068, 6103.0005)
 
-[node name="Slime11" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="6" unique_id=2090053591 instance=ExtResource("3_psic3")]
+[node name="Slime14" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="6" unique_id=1809483545 instance=ExtResource("3_psic3")]
+position = Vector2(6536, 6559)
+
+[node name="Slime15" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="7" unique_id=148490395 instance=ExtResource("3_psic3")]
+position = Vector2(2668, 7463.0005)
+
+[node name="Slime16" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="8" unique_id=1754075072 instance=ExtResource("3_psic3")]
+position = Vector2(4013, 7293.0005)
+
+[node name="Slime17" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="9" unique_id=507998022 instance=ExtResource("3_psic3")]
+position = Vector2(4489, 9103)
+
+[node name="Slime18" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="10" unique_id=1920552596 instance=ExtResource("3_psic3")]
+position = Vector2(5532, 9762)
+
+[node name="Slime19" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="11" unique_id=480261910 instance=ExtResource("3_psic3")]
+position = Vector2(8956, 9741)
+
+[node name="Slime20" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="12" unique_id=1845210344 instance=ExtResource("3_psic3")]
+position = Vector2(10240, 9745)
+
+[node name="Slime11" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="13" unique_id=2090053591 instance=ExtResource("3_psic3")]
 position = Vector2(10019, 7549)
 
-[node name="Slime12" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="7" unique_id=590271794 instance=ExtResource("3_psic3")]
+[node name="Slime12" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="14" unique_id=590271794 instance=ExtResource("3_psic3")]
 position = Vector2(9302, 4526.0005)
 
-[node name="Slime13" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="8" unique_id=2029199143 instance=ExtResource("3_psic3")]
+[node name="Slime21" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="15" unique_id=1209513708 instance=ExtResource("3_psic3")]
+position = Vector2(9722, 5926)
+
+[node name="Slime13" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="16" unique_id=2029199143 instance=ExtResource("3_psic3")]
 position = Vector2(9054, 3313)
 
-[node name="Slime6" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="9" unique_id=1017008931 instance=ExtResource("3_psic3")]
+[node name="Slime6" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="17" unique_id=1017008931 instance=ExtResource("3_psic3")]
 position = Vector2(8514, 7026)
 
-[node name="Slime7" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="10" unique_id=1529994947 instance=ExtResource("3_psic3")]
+[node name="Slime7" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="18" unique_id=1529994947 instance=ExtResource("3_psic3")]
 position = Vector2(8416, 7748)
 
-[node name="Slime8" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="11" unique_id=449835810 instance=ExtResource("3_psic3")]
+[node name="Slime8" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="19" unique_id=449835810 instance=ExtResource("3_psic3")]
 position = Vector2(7970, 7834)
 
-[node name="Slime9" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="12" unique_id=1079746779 instance=ExtResource("3_psic3")]
+[node name="Slime9" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="20" unique_id=1079746779 instance=ExtResource("3_psic3")]
 position = Vector2(2912, 5883.0005)
 
-[node name="Slime10" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="13" unique_id=1175616917 instance=ExtResource("3_psic3")]
+[node name="Slime10" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="21" unique_id=1175616917 instance=ExtResource("3_psic3")]
 position = Vector2(6050, 5504.0005)
 
-[node name="Ghost" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="14" unique_id=574211752 instance=ExtResource("4_5ieym")]
+[node name="Ghost" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="22" unique_id=574211752 instance=ExtResource("4_5ieym")]
 position = Vector2(1416, 6314)
 scale = Vector2(2, 2)
 
-[node name="Ghost2" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="15" unique_id=168344275 instance=ExtResource("4_5ieym")]
+[node name="Ghost18" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="23" unique_id=1727592897 instance=ExtResource("4_5ieym")]
+position = Vector2(3555, 7364)
+scale = Vector2(2, 2)
+
+[node name="Ghost19" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="24" unique_id=1530417346 instance=ExtResource("4_5ieym")]
+position = Vector2(4489, 7471)
+scale = Vector2(2, 2)
+
+[node name="Ghost20" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="25" unique_id=1509574198 instance=ExtResource("4_5ieym")]
+position = Vector2(5271, 6214)
+scale = Vector2(2, 2)
+
+[node name="Ghost12" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="26" unique_id=198484345 instance=ExtResource("4_5ieym")]
+position = Vector2(5713, 6731)
+scale = Vector2(2, 2)
+
+[node name="Ghost13" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="27" unique_id=586084874 instance=ExtResource("4_5ieym")]
+position = Vector2(3621, 5969)
+scale = Vector2(2, 2)
+
+[node name="Ghost14" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="28" unique_id=505150845 instance=ExtResource("4_5ieym")]
+position = Vector2(8437, 7375)
+scale = Vector2(2, 2)
+
+[node name="Ghost2" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="29" unique_id=168344275 instance=ExtResource("4_5ieym")]
 position = Vector2(3342, 6103)
 scale = Vector2(2, 2)
 
-[node name="Ghost3" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="16" unique_id=1098698541 instance=ExtResource("4_5ieym")]
+[node name="Ghost3" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="30" unique_id=1098698541 instance=ExtResource("4_5ieym")]
 position = Vector2(4455, 6264)
 scale = Vector2(2, 2)
 
-[node name="Ghost4" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="17" unique_id=232095340 instance=ExtResource("4_5ieym")]
+[node name="Ghost4" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="31" unique_id=232095340 instance=ExtResource("4_5ieym")]
 position = Vector2(4925, 5342)
 scale = Vector2(2, 2)
 
-[node name="Ghost5" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="18" unique_id=837146204 instance=ExtResource("4_5ieym")]
+[node name="Ghost5" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="32" unique_id=837146204 instance=ExtResource("4_5ieym")]
 position = Vector2(8318, 6559)
 scale = Vector2(2, 2)
 
-[node name="Ghost6" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="19" unique_id=746786902 instance=ExtResource("4_5ieym")]
+[node name="Ghost6" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="33" unique_id=746786902 instance=ExtResource("4_5ieym")]
 position = Vector2(8000, 7273)
 scale = Vector2(2, 2)
 
-[node name="Ghost11" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="20" unique_id=1701297257 instance=ExtResource("4_5ieym")]
+[node name="Ghost11" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="34" unique_id=1701297257 instance=ExtResource("4_5ieym")]
 position = Vector2(10344, 7826)
 scale = Vector2(2, 2)
 
-[node name="Ghost7" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="21" unique_id=603237385 instance=ExtResource("4_5ieym")]
+[node name="Ghost7" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="35" unique_id=603237385 instance=ExtResource("4_5ieym")]
 position = Vector2(10620, 10248)
 scale = Vector2(2, 2)
 
-[node name="Ghost8" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="22" unique_id=180661511 instance=ExtResource("4_5ieym")]
+[node name="Ghost8" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="36" unique_id=180661511 instance=ExtResource("4_5ieym")]
 position = Vector2(10620, 9441)
 scale = Vector2(2, 2)
 
-[node name="Ghost9" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="23" unique_id=743624864 instance=ExtResource("4_5ieym")]
+[node name="Ghost9" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="37" unique_id=743624864 instance=ExtResource("4_5ieym")]
 position = Vector2(9443, 9391)
 scale = Vector2(2, 2)
 
-[node name="Ghost10" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="24" unique_id=1443479957 instance=ExtResource("4_5ieym")]
+[node name="Ghost15" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="38" unique_id=1374340202 instance=ExtResource("4_5ieym")]
+position = Vector2(9738, 8591)
+scale = Vector2(2, 2)
+
+[node name="Ghost16" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="39" unique_id=797012174 instance=ExtResource("4_5ieym")]
+position = Vector2(9509, 7670)
+scale = Vector2(2, 2)
+
+[node name="Ghost17" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="40" unique_id=2128025639 instance=ExtResource("4_5ieym")]
+position = Vector2(9738, 6781)
+scale = Vector2(2, 2)
+
+[node name="Ghost10" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="41" unique_id=1443479957 instance=ExtResource("4_5ieym")]
 position = Vector2(9672, 10142)
 scale = Vector2(2, 2)
 
-[node name="Bug" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="25" unique_id=1001966105 instance=ExtResource("5_3t0ea")]
-position = Vector2(3744, 7375)
-
-[node name="Bug2" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="26" unique_id=1634725742 instance=ExtResource("5_3t0ea")]
+[node name="Bug2" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="42" unique_id=1634725742 instance=ExtResource("5_3t0ea")]
 position = Vector2(6536, 9635)
 
-[node name="Bug3" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="27" unique_id=1373316474 instance=ExtResource("5_3t0ea")]
+[node name="Bug3" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="43" unique_id=1373316474 instance=ExtResource("5_3t0ea")]
 position = Vector2(8153, 9741)
 
-[node name="Bug4" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="28" unique_id=1155933775 instance=ExtResource("5_3t0ea")]
+[node name="Bug4" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="44" unique_id=1155933775 instance=ExtResource("5_3t0ea")]
 position = Vector2(10344, 7541.0005)
 
-[node name="Bug5" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="29" unique_id=152673414 instance=ExtResource("5_3t0ea")]
-position = Vector2(9738, 6453.0005)
+[node name="Bug5" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="45" unique_id=152673414 instance=ExtResource("5_3t0ea")]
+position = Vector2(9738, 6445.0005)
 
-[node name="Bug6" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="30" unique_id=1211326361 instance=ExtResource("5_3t0ea")]
+[node name="Bug6" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="46" unique_id=1211326361 instance=ExtResource("5_3t0ea")]
 position = Vector2(10117, 4820.0005)
 
-[node name="Bug7" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="31" unique_id=628680146 instance=ExtResource("5_3t0ea")]
+[node name="Bug9" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="47" unique_id=1990599425 instance=ExtResource("5_3t0ea")]
+position = Vector2(8727, 3243)
+
+[node name="Bug10" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="48" unique_id=1241896933 instance=ExtResource("5_3t0ea")]
+position = Vector2(9559, 3640)
+
+[node name="Bug11" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="49" unique_id=632448089 instance=ExtResource("5_3t0ea")]
+position = Vector2(9615, 4820)
+
+[node name="Bug12" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="50" unique_id=1585607791 instance=ExtResource("5_3t0ea")]
+position = Vector2(10344, 10339)
+
+[node name="Bug13" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="51" unique_id=730583188 instance=ExtResource("5_3t0ea")]
+position = Vector2(9693, 9513)
+
+[node name="Bug14" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="52" unique_id=1513981313 instance=ExtResource("5_3t0ea")]
+position = Vector2(9738, 8259)
+
+[node name="Bug7" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="53" unique_id=628680146 instance=ExtResource("5_3t0ea")]
 position = Vector2(8153, 3069)
 
-[node name="Bug8" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="32" unique_id=1661155724 instance=ExtResource("5_3t0ea")]
+[node name="Bug8" parent="Enemies" parent_id_path=PackedInt32Array(1199793574) index="54" unique_id=1661155724 instance=ExtResource("5_3t0ea")]
 position = Vector2(4674, 9639)
 
 [node name="Exit" parent="." index="6" unique_id=640274469]
@@ -149,6 +223,7 @@ scale = Vector2(9.5, 9.5)
 
 [node name="BG Music" type="AudioStreamPlayer" parent="." index="8" unique_id=662552925]
 stream = ExtResource("6_e4xgy")
+volume_db = -10.0
 autoplay = true
 
 [node name="ObjectiveBarrier" parent="." index="9" unique_id=1026467472 instance=ExtResource("7_co168")]

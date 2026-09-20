@@ -199,6 +199,7 @@ size = Vector2(60.400005, 42.000004)
 [node name="BlueSlime" unique_id=634249653 instance=ExtResource("1_r8a0c")]
 scale = Vector2(3, 3)
 move_speed = 500.0
+strength = 15
 knockback_force = 200.0
 attack_stop_distance = 80.0
 footstep_sound = ExtResource("2_vl2rh")
@@ -227,5 +228,8 @@ scale = Vector2(0.9999998, 0.9999998)
 shape = SubResource("RectangleShape2D_r8a0c")
 
 [node name="Enemy_HealthBar" parent="." index="8" unique_id=1802795097]
-position = Vector2(-25.62, -37.945)
+offset_left = -25.62
+offset_top = -37.945
+offset_right = -25.62
+offset_bottom = -37.945
 scale = Vector2(3, 3)

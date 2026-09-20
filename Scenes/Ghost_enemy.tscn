@@ -102,8 +102,9 @@ size = Vector2(66, 66)
 [node name="Ghost" unique_id=574211752 instance=ExtResource("1_epss5")]
 max_health = 150
 move_speed = 500.0
-strength = 20
+strength = 5
 knockback_force = 200.0
+drop_chance = 0.3
 attack_stop_distance = 80.0
 footstep_sound = ExtResource("2_bfhlx")
 hurt_sound = ExtResource("3_konra")
@@ -126,5 +127,8 @@ shape = SubResource("CircleShape2D_4xijp")
 shape = SubResource("RectangleShape2D_ul8lf")
 
 [node name="Enemy_HealthBar" parent="." index="8" unique_id=1802795097]
-position = Vector2(-25.615, -52.995)
+offset_left = -25.615
+offset_top = -52.995
+offset_right = -25.615
+offset_bottom = -52.995
 scale = Vector2(3, 3)

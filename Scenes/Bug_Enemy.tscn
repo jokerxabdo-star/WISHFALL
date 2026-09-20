@@ -251,6 +251,9 @@ size = Vector2(78.66667, 57.333336)
 
 [node name="Bug" unique_id=574211752 instance=ExtResource("1_newx4")]
 scale = Vector2(3, 3)
+max_health = 150
+move_speed = 300.0
+drop_chance = 0.5
 step_interval = 0.5
 footstep_sound = ExtResource("2_0y5ye")
 hurt_sound = ExtResource("3_ptku6")
@@ -271,5 +274,8 @@ shape = SubResource("RectangleShape2D_v0olk")
 shape = SubResource("RectangleShape2D_h5afs")
 
 [node name="Enemy_HealthBar" parent="." index="8" unique_id=1802795097]
-position = Vector2(-22.915, -44.47)
+offset_left = -22.915
+offset_top = -44.47
+offset_right = -22.915
+offset_bottom = -44.47
 scale = Vector2(2.635, 2.635)

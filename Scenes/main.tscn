@@ -3,11 +3,17 @@
 [ext_resource type="Script" uid="uid://bvxfp3f2b58co" path="res://Scripts/main.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://dlcpl646q6oql" path="res://Scenes/folder levels/base_leve.tscn" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://b2sro0nagbvmu" path="res://Scenes/hud.tscn" id="3_jjvhh"]
+[ext_resource type="AudioStream" uid="uid://5ty3mq15fjey" path="res://Assets/Audios/Story_Scene.mp3" id="4_jjvhh"]
 
 [node name="Main" type="Node2D" unique_id=677353925]
 script = ExtResource("1_bo1nx")
 
 [node name="LevelRoot" parent="." unique_id=463207398 instance=ExtResource("3_8gbba")]
+visible = false
 position = Vector2(771, 255)
 
 [node name="HUD" parent="." unique_id=1766623684 instance=ExtResource("3_jjvhh")]
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=558451470]
+stream = ExtResource("4_jjvhh")
+bus = &"Music"

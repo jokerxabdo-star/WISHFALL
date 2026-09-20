@@ -5,6 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://cwo7b1mskdv2m" path="res://Assets/Images/UI/MainMenu/Developers.png" id="3_m6uer"]
 [ext_resource type="AudioStream" uid="uid://bw1m2tkf3jlyf" path="res://Assets/Audios/MainMenu_Music.mp3" id="4_a43kq"]
 
+[sub_resource type="Gradient" id="Gradient_a43kq"]
+colors = PackedColorArray(0.9763467, 0.80766267, 0.5931373, 1, 0.43286473, 0.3314941, 0.19635099, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_77wvw"]
+gradient = SubResource("Gradient_a43kq")
+fill = 1
+
 [node name="StartMenu" type="Control" unique_id=1176771945]
 layout_mode = 3
 anchors_preset = 15
@@ -14,14 +21,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jgtwh")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=267872409]
+[node name="TextureRect3" type="TextureRect" parent="." unique_id=640607714]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.7875862, 0.66743076, 0, 1)
+texture = SubResource("GradientTexture2D_77wvw")
 
 [node name="TextureRect2" type="TextureRect" parent="." unique_id=417290118]
 modulate = Color(1, 1, 1, 0)
@@ -108,10 +115,12 @@ layout_mode = 2
 stream = ExtResource("4_a43kq")
 volume_db = -10.0
 autoplay = true
+bus = &"Music"
 
 [node name="MenuAudio" type="AudioStreamPlayer" parent="." unique_id=1667041620]
 
 [node name="FadeOverlay" type="ColorRect" parent="." unique_id=2061024961]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
