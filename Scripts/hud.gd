@@ -89,13 +89,11 @@ func reset_tactical_overlay() -> void:
 func set_player(p) -> void:
 	player = p
 	if player:
-		# Disconnect previous if re-attaching
 		if player.health_changed.is_connected(_update_health):
 			player.health_changed.disconnect(_update_health)
 			
 		player.health_changed.connect(_update_health)
 		
-		# Initialize health bar with player's base and max stats
 		init_health(player.max_health)
 		_update_health(player.health, player.max_health)
 		
@@ -119,16 +117,13 @@ func _update_health(new_health: int, max_hp: int = 0) -> void:
 	if not player_health_bar:
 		return
 
-	# Fallback if max_hp is omitted
 	var effective_max := max_hp
 	if effective_max <= 0:
 		effective_max = player.max_health if is_instance_valid(player) else 100
 
-	# Clamp to eliminate visual overflow/overheal glitching
 	var clamped_hp := clampi(new_health, 0, effective_max)
 	var health_ratio := float(clamped_hp) / float(effective_max) if effective_max > 0 else 0.0
 
-	# Pass both the clamped health and current max health to the sprite bar
 	if player_health_bar.has_method("Update_health"):
 		player_health_bar.Update_health(clamped_hp, effective_max)
 	elif player_health_bar.has_method("set_health_ratio"):
@@ -145,7 +140,7 @@ func fade(alpha: float) -> void:
 	await tween.finished
 
 
-############################Tactical_Mode_UI############################
+# Tactical Mode UI Control
 func set_teleport_unlocked(unlocked: bool) -> void:
 	is_teleport_unlocked = unlocked
 	if teleport_progress_bar:
@@ -200,10 +195,9 @@ func set_tactical_mode(active: bool, slowmo_factor: float) -> void:
 func update_reticle_validity(valid: bool) -> void:
 	if target_reticle and target_reticle.visible:
 		target_reticle.set("is_valid_target", valid)
-############################Tactical_Mode_UI############################
 
 
-############################Cooldown_Display############################
+# Cooldown Display
 func update_teleport_cooldown(ratio: float) -> void:
 	var clamped_ratio := clampf(ratio, 0.0, 1.0)
 	
@@ -216,4 +210,3 @@ func update_teleport_cooldown(ratio: float) -> void:
 func update_dash_cooldown(ratio: float) -> void:
 	if dash_progress_bar:
 		dash_progress_bar.value = clampf(ratio, 0.0, 1.0)
-############################Cooldown_Display############################

@@ -64,11 +64,10 @@ func Update_health(new_health: int, new_max_health: int = 0) -> void:
 	# Strict clamp: health can never exceed current max_health or drop below 0
 	health = clampi(new_health, 0, max_health)
 	
-	# Compute pure percentage (0.0 to 1.0)
 	var target_ratio: float = clampf(float(health) / float(max_health), 0.0, 1.0)
 	var target_width: float = full_width * target_ratio
 	
-	# Green bar snaps immediately to the percentage
+	# Red bar snaps immediately to the percentage
 	if health_bar:
 		health_bar.region_rect.size.x = target_width
 	

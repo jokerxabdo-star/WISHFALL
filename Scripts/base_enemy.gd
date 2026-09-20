@@ -5,7 +5,7 @@ signal enemy_died
 
 @export_group("Key Drop Settings")
 @export var drops_key: bool = false ## If true, drops the level key on death instead of hearts
-@export var key_scene: PackedScene = preload("res://Scenes/key.tscn") ## Path to your key scene
+@export var key_scene: PackedScene = preload("res://Scenes/key.tscn")
 
 @export_group("Base Enemy Stats")
 @export var max_health: int = 80

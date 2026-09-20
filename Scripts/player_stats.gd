@@ -1,8 +1,8 @@
 extends Node
 
 # Health
-var max_health: int = 100
-var health: int = 100
+var max_health: int = 250
+var health: int = max_health
 
 # Combat & Movement
 var Strength: int = 20
@@ -20,7 +20,7 @@ var tactical_zoom_factor: float = 0.8 ## Smaller number zooms out farther
 
 
 func reset() -> void:
-	max_health = 100
+	max_health = 250
 	health = max_health
 	Strength = 20
 	speed = 700

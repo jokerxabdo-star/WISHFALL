@@ -6,7 +6,6 @@ var pulse_time: float = 0.0
 func _process(delta: float) -> void:
 	if not visible:
 		return
-	# Use viewport position because this node is inside a CanvasLayer/HUD!
 	global_position = get_viewport().get_mouse_position()
 	pulse_time += delta * 5.0
 	queue_redraw()

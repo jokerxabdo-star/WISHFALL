@@ -230,7 +230,7 @@ func _check_barrier_bump() -> void:
 				break
 
 
-############################Teleport_Mechanic############################
+# Teleport Mechanic
 func toggle_teleport_mode() -> void:
 	is_targeting_teleport = !is_targeting_teleport
 	
@@ -327,7 +327,6 @@ func execute_teleport(target_world_pos: Vector2) -> void:
 	
 	var collision_hits := space_state.intersect_point(query)
 	if collision_hits.size() > 0:
-		print("Teleport blocked by: ", collision_hits[0].collider.name, " (Type: ", collision_hits[0].collider.get_class(), ")")
 		return
 
 	var start_pos := global_position
@@ -386,10 +385,9 @@ func spawn_teleport_ghost_line(from_pos: Vector2, to_pos: Vector2) -> void:
 		var tween := create_tween()
 		tween.tween_property(ghost, "modulate:a", 0.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		tween.tween_callback(ghost.queue_free)
-############################Teleport_Mechanic############################
 
 
-############################Dash_Logic############################
+# Dash Logic
 func dash_logic(delta: float) -> void:
 	var move_input := Input.get_vector("Left", "Right", "Up", "Down")
 	
@@ -441,7 +439,6 @@ func dash_logic(delta: float) -> void:
 				dash_reload_timer = 0.0
 				can_dash = true
 				get_tree().call_group("HUD", "update_dash_cooldown", 1.0)
-############################Dash_Logic############################
 
 
 func check_dash_collisions() -> void:
@@ -500,7 +497,7 @@ func spawn_ghost_trail() -> void:
 	tween.tween_callback(ghost.queue_free)
 
 
-############################Player_Footsteps############################
+# Player Footsteps
 func _handle_footsteps(delta: float) -> void:
 	var actual_speed_sq := get_real_velocity().length_squared()
 	
@@ -517,10 +514,9 @@ func _play_footstep() -> void:
 	if is_instance_valid(footstep_audio) and footstep_audio.stream:
 		footstep_audio.pitch_scale = randf_range(0.92, 1.08)
 		footstep_audio.play()
-############################Player_Footsteps############################
 
 
-############################Player_Movement############################
+# Player Movement
 func Process_movement() -> void:
 	var direction := Input.get_vector("Left", "Right", "Up", "Down")
 	
@@ -529,10 +525,9 @@ func Process_movement() -> void:
 		Last_direction = direction
 	else:
 		velocity = Vector2.ZERO
-############################Player_Movement############################
 
 
-###########################Player_Animations###########################
+# Player Animations
 func Process_animation() -> void:
 	if Is_attacking:
 		return
@@ -573,10 +568,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if Is_attacking:
 		Is_attacking = false
 		enemies_hit_during_attack.clear()
-###########################Player_Animations###########################
 
 
-#############################Player_Attack & Hitbox#############################
+# Player Attack & Hitbox
 func Attack() -> void:
 	Is_attacking = true
 	enemies_hit_during_attack.clear()
@@ -616,10 +610,9 @@ func _on_hit_box_body_entered(body: Node2D) -> void:
 				apply_camera_shake(dash_camera_shake * 1.5)
 	elif Is_attacking:
 		damage_enemy_with_sword(body)
-#############################Player_Attack & Hitbox#############################
 
 
-#############################Player_Health#############################
+# Player Health
 func heal(amount: int) -> void:
 	health = mini(max_health, health + amount)
 	Player_stats.health = health
@@ -663,10 +656,9 @@ func flash_hit() -> void:
 		animated_sprite_2d.modulate = Color(3.0, 0.3, 0.3, 1.0)
 		flash_tween = create_tween()
 		flash_tween.tween_property(animated_sprite_2d, "modulate", Color.WHITE, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-#############################Player_Health#############################
 
 
-#############################Upgrade_Receiver#############################
+# Upgrade Receiver
 func is_upgrade_maxed(upgrade_id: String) -> bool:
 	match upgrade_id:
 		"more_max_health":
@@ -689,21 +681,21 @@ func is_upgrade_maxed(upgrade_id: String) -> bool:
 func apply_upgrade(upgrade: Dictionary) -> void:
 	match upgrade.get("id", ""):
 		"player_strength":
-			Strength = mini(max_strength_cap, Strength + 10)
+			Strength = mini(max_strength_cap, Strength + 20)
 			Player_stats.Strength = Strength
 			
 		"more_max_health":
-			max_health = mini(max_health_cap, max_health + 25)
+			max_health = mini(max_health_cap, max_health + max_health * (25/100))
 			Player_stats.max_health = max_health
 			get_tree().call_group("HUD", "init_health", max_health)
 			heal(25)
 			
 		"dash_strength":
-			dash_damage = mini(max_dash_damage_cap, dash_damage + 10)
+			dash_damage = mini(max_dash_damage_cap, dash_damage + 20)
 			Player_stats.dash_damage = dash_damage
 			
 		"increase_speed":
-			SPEED = minf(max_speed_cap, SPEED + 35.0)
+			SPEED = minf(max_speed_cap, SPEED + 50.0)
 			Player_stats.speed = SPEED
 			
 		"heal_50":
@@ -726,12 +718,11 @@ func apply_upgrade(upgrade: Dictionary) -> void:
 			Player_stats.teleport_cooldown = teleport_cooldown
 			
 		"teleport_coverage":
-			tactical_zoom_factor = maxf(min_tactical_zoom_cap, tactical_zoom_factor - 0.1)
+			tactical_zoom_factor = maxf(min_tactical_zoom_cap, tactical_zoom_factor - 0.15)
 			Player_stats.tactical_zoom_factor = tactical_zoom_factor
-#############################Upgrade_Receiver#############################
 
 
-#############################Player_Death#############################
+# Player Death
 func die() -> void:
 	if flash_tween and flash_tween.is_valid():
 		flash_tween.kill()
@@ -746,4 +737,3 @@ func die() -> void:
 	alive = false
 	await animated_sprite_2d.animation_finished
 	died.emit()
-#############################Player_Death#############################

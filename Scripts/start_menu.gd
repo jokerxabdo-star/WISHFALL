@@ -5,23 +5,23 @@ extends Control
 @onready var quit_button: Button = $TextureRect/VBoxContainer/QuitButton
 
 # Backgrounds and UI containers
-@onready var main_menu_bg: TextureRect = $TextureRect      # Main menu frame background
+@onready var main_menu_bg: TextureRect = $TextureRect       # Main menu frame background
 @onready var main_menu_buttons: VBoxContainer = $TextureRect/VBoxContainer # Main buttons container
 
-@onready var developers_bg: TextureRect = $TextureRect2    # Developers background image
+@onready var developers_bg: TextureRect = $TextureRect2     # Developers background image
 @onready var vbox_container: VBoxContainer = $TextureRect2/VBoxContainer
 @onready var back_button: Button = $TextureRect2/BackButton
 
 # Audio players
-@onready var menu_audio: AudioStreamPlayer = $MenuAudio       # For UI click/hover sounds
-@onready var bgm_player: AudioStreamPlayer = $BGMPlayer       # Dedicated audio player for background music
+@onready var menu_audio: AudioStreamPlayer = $MenuAudio        # For UI click/hover sounds
+@onready var bgm_player: AudioStreamPlayer = $Music            # Dedicated audio player for background music
 
 # Optional fade overlay (if you added a full-screen black ColorRect on top of your StartMenu scene)
 @onready var fade_overlay: ColorRect = $FadeOverlay
 
-# Load your sound effects and background music
-var hover_sound = preload("res://Assets/Audios/UI Click.wav")
-var click_sound = preload("res://Assets/Audios/UI Hover.wav")
+# Sound effects
+var hover_sound = preload("res://Assets/Audios/UI Hover.wav")
+var click_sound = preload("res://Assets/Audios/UI Click.wav")
 
 var is_transitioning: bool = false
 
@@ -59,13 +59,15 @@ func _ready() -> void:
 	if back_button:
 		back_button.pressed.connect(_on_back_pressed)
 
-	# --- BACKGROUND MUSIC FADE IN ---
-	if is_instance_valid(bgm_player) and bgm_player.stream:
+	# --- BACKGROUND MUSIC FADE IN TO -10 dB ON START ---
+	if is_instance_valid(bgm_player):
 		bgm_player.volume_db = -80.0 # Start completely silent
-		bgm_player.play()
+		if not bgm_player.playing:
+			bgm_player.play()
 		
+		# Smoothly fade volume up to -10.0 dB over 1.5 seconds
 		var bgm_tween = create_tween()
-		bgm_tween.tween_property(bgm_player, "volume_db", 0.0, 1.5)
+		bgm_tween.tween_property(bgm_player, "volume_db", -10.0, 1.5)
 
 
 # Helper function to automatically add hover and click sounds to any button
@@ -91,11 +93,11 @@ func _on_play_pressed() -> void:
 		return
 	is_transitioning = true
 	
-	# Fade out background music and screen fade-out simultaneously
+	# Fade out background music and screen fade-out simultaneously when entering the game
 	var fade_tween = create_tween().set_parallel(true)
 	
 	if is_instance_valid(bgm_player) and bgm_player.playing:
-		fade_tween.tween_property(bgm_player, "volume_db", -80.0, 0.8)
+		fade_tween.tween_property(bgm_player, "volume_db", -80.0, 1.5)
 		
 	if is_instance_valid(fade_overlay):
 		fade_overlay.visible = true

@@ -1,3 +1,4 @@
+class_name ObjectiveBarrier
 extends Node2D
 
 @onready var solid_wall_shape: CollisionShape2D = $SolidWall/CollisionShape2D

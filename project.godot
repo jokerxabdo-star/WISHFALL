@@ -17,6 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="WishFall"
 run/main_scene="uid://b17hf7m88sbsn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+run/max_fps=120
 config/icon="res://icon.svg"
 
 [audio]
@@ -31,6 +32,7 @@ Player_stats="*res://Scripts/player_stats.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=3
 
 [input]
 
