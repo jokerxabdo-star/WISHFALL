@@ -14,6 +14,8 @@ var SPEED: float = 700.0
 @export var teleport_cooldown: float = 3.0 ## Cooldown duration in seconds
 @export var has_teleport: bool = false:
 	set(value):
+		if has_teleport == value:
+			return
 		has_teleport = value
 		Player_stats.has_teleport = value
 		if is_inside_tree():
@@ -22,6 +24,8 @@ var SPEED: float = 700.0
 @export_group("Dash Settings")
 @export var has_dash: bool = false:
 	set(value):
+		if has_dash == value:
+			return
 		has_dash = value
 		Player_stats.has_dash = value
 		if is_inside_tree():
@@ -34,6 +38,9 @@ var SPEED: float = 700.0
 @export var ghost_scale: float = 4.0
 @export var ghost_color: Color = Color(0.2, 0.75, 1.0, 0.65)
 @export var dash_camera_shake: float = 5.0
+
+@export_group("Damage Feedback Settings")
+@export var damage_camera_shake: float = 16.0 ## Adjustable camera shake intensity when taking damage from Inspector
 
 @export_group("Upgrade Stat Caps & Limits")
 @export var max_health_cap: int = 200
@@ -70,11 +77,14 @@ var enemies_hit_during_attack: Array[int] = []
 
 var Last_direction: Vector2 = Vector2.RIGHT
 var Is_attacking: bool = false
-var Hitbox_offset: Vector2
+var Hitbox_offset: Vector2 = Vector2.ZERO
 var alive: bool = true
 var max_health: int
 var health: int
 var Strength: int = 20
+
+# Movement trigger tracking for dust
+var was_moving: bool = false
 
 # Footstep rhythm timer
 var step_timer: float = 0.0
@@ -82,29 +92,44 @@ var step_timer: float = 0.0
 # Input lock flag for menus
 var is_input_locked: bool = false
 
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var take_damage_sound: AudioStreamPlayer2D = $TakeDamage
-@onready var swing_sword_sound: AudioStreamPlayer2D = $SwingSword
-@onready var player_dash_sound: AudioStreamPlayer2D = $PlayerDash
-@onready var slow_motion_sound: AudioStreamPlayer2D = $SlowMotion
-@onready var hit_box: Area2D = $HitBox
-@onready var damage_cool_down: Timer = $DamageCoolDown
-@onready var camera_2d: Camera2D = $Camera2D
+@onready var animated_sprite_2d: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
+@onready var take_damage_sound: AudioStreamPlayer2D = get_node_or_null("TakeDamage")
+@onready var swing_sword_sound: AudioStreamPlayer2D = get_node_or_null("SwingSword")
+@onready var player_dash_sound: AudioStreamPlayer2D = get_node_or_null("PlayerDash")
+@onready var slow_motion_sound: AudioStreamPlayer2D = get_node_or_null("SlowMotion")
+@onready var hit_box: Area2D = get_node_or_null("HitBox")
+@onready var damage_cool_down: Timer = get_node_or_null("DamageCoolDown")
+@onready var camera_2d: Camera2D = get_node_or_null("Camera2D")
 @onready var footstep_audio: AudioStreamPlayer2D = get_node_or_null("FootstepAudio")
+@onready var move_dust: CPUParticles2D = get_node_or_null("MoveDust")
+@onready var dash_dust: CPUParticles2D = get_node_or_null("DashDust")
+@onready var teleport_start_dust: CPUParticles2D = get_node_or_null("TeleportStartDust")
+@onready var teleport_end_dust: CPUParticles2D = get_node_or_null("TeleportEndDust")
 
 
 func _ready() -> void:
-	# Register to the Player group so enemies and HUD can find this node
 	add_to_group("Player")
 
-	# Sync inspector zoom directly into Player_stats
+	# Configure base particle properties safely as templates
+	for p_node in [move_dust, dash_dust, teleport_start_dust, teleport_end_dust]:
+		if is_instance_valid(p_node):
+			p_node.top_level = true
+			p_node.emitting = false
+			p_node.one_shot = true
+			p_node.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+			p_node.emission_rect_extents = Vector2(16, 6)
+
 	Player_stats.tactical_zoom_factor = tactical_zoom_factor
 
-	# Load all persistent stats from Player_stats
 	max_health = Player_stats.max_health
 	health = Player_stats.health
 	Strength = Player_stats.Strength
-	SPEED = Player_stats.speed
+	
+	if "SPEED" in Player_stats:
+		SPEED = Player_stats.SPEED
+	elif "speed" in Player_stats:
+		SPEED = Player_stats.speed
+
 	dash_damage = Player_stats.dash_damage
 	dash_reload_cost = Player_stats.dash_reload_cost
 	teleport_cooldown = Player_stats.teleport_cooldown
@@ -112,20 +137,17 @@ func _ready() -> void:
 	has_teleport = Player_stats.has_teleport
 	tactical_zoom_factor = Player_stats.tactical_zoom_factor
 
-	Hitbox_offset = hit_box.position
-	hit_box.monitoring = true
+	if is_instance_valid(hit_box):
+		Hitbox_offset = hit_box.position
+		hit_box.monitoring = true
+		
 	if camera_2d:
 		normal_zoom = camera_2d.zoom
 			
-	# Sync initial HUD visibility based on unlocked status
 	get_tree().call_group("HUD", "set_teleport_unlocked", has_teleport)
 	get_tree().call_group("HUD", "set_dash_unlocked", has_dash)
-	
-	# Initialize progress values to full
 	get_tree().call_group("HUD", "update_teleport_cooldown", 1.0)
 	get_tree().call_group("HUD", "update_dash_cooldown", 1.0)
-	
-	# Initialize HUD health bar with current and max values
 	get_tree().call_group("HUD", "init_health", max_health)
 	health_changed.emit(health, max_health)
 
@@ -133,7 +155,6 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	Engine.time_scale = 1.0
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
 	_reset_music_pitch()
 		
 	if camera_tween and camera_tween.is_valid():
@@ -205,14 +226,36 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_just_pressed("Attack") and not Is_attacking:
 				Attack()
 			Process_movement()
+			
+			var actual_speed_sq := get_real_velocity().length_squared()
+			var is_moving := (actual_speed_sq > 100.0)
+			
+			if is_moving and not was_moving:
+				spawn_independent_dust(move_dust, global_position + Vector2(0, 10))
+			
+			was_moving = is_moving
 		
 		move_and_slide()
-		
-		# Check physical barrier collisions
 		_check_barrier_bump()
-
 		Process_animation()
 		_handle_footsteps(delta)
+
+
+# Spawns a fully independent world particle instance that never gets interrupted
+func spawn_independent_dust(template_node: CPUParticles2D, spawn_pos: Vector2) -> void:
+	if not is_instance_valid(template_node):
+		return
+	var p_copy := template_node.duplicate() as CPUParticles2D
+	get_tree().current_scene.add_child(p_copy)
+	p_copy.global_position = spawn_pos
+	p_copy.modulate.a = 1.0
+	p_copy.restart()
+	p_copy.emitting = true
+	
+	var fade_tween := create_tween()
+	fade_tween.tween_interval(p_copy.lifetime * 0.6)
+	fade_tween.tween_property(p_copy, "modulate:a", 0.0, p_copy.lifetime * 0.4)
+	fade_tween.tween_callback(p_copy.queue_free)
 
 
 func _check_barrier_bump() -> void:
@@ -220,11 +263,9 @@ func _check_barrier_bump() -> void:
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		if collider:
-			# 1. Exit Door / Key Barrier
 			if collider.is_in_group("ExitBarrier") or collider.name == "Barrier" or collider.name == "Exit":
 				get_tree().call_group("LevelController", "on_player_hit_locked_exit")
 				break
-			# 2. Kill Enemies First Gate
 			elif collider.name == "EnemyGate" or collider.name == "EnemyBarrier" or collider.is_in_group("EnemyGates"):
 				get_tree().call_group("LevelController", "on_player_hit_enemy_gate")
 				break
@@ -244,8 +285,9 @@ func toggle_teleport_mode() -> void:
 	
 	if is_targeting_teleport:
 		Engine.time_scale = slowmo_timescale
-		slow_motion_sound.pitch_scale = randf_range(0.3, 0.5)
-		slow_motion_sound.play()
+		if is_instance_valid(slow_motion_sound):
+			slow_motion_sound.pitch_scale = randf_range(0.3, 0.5)
+			slow_motion_sound.play()
 		
 		if camera_2d:
 			camera_2d.top_level = false
@@ -257,7 +299,8 @@ func toggle_teleport_mode() -> void:
 			if is_instance_valid(music_player) and "pitch_scale" in music_player:
 				camera_tween.tween_property(music_player, "pitch_scale", slowmo_pitch, 0.01 / slowmo_timescale)
 			
-		animated_sprite_2d.modulate = Color(0.6, 0.8, 1.0, 0.85)
+		if is_instance_valid(animated_sprite_2d):
+			animated_sprite_2d.modulate = Color(0.6, 0.8, 1.0, 0.85)
 	else:
 		Engine.time_scale = 1.0
 		
@@ -268,7 +311,8 @@ func toggle_teleport_mode() -> void:
 			if is_instance_valid(music_player) and "pitch_scale" in music_player:
 				camera_tween.tween_property(music_player, "pitch_scale", 1.0, 0.18)
 			
-		animated_sprite_2d.modulate = Color.WHITE
+		if is_instance_valid(animated_sprite_2d):
+			animated_sprite_2d.modulate = Color.WHITE
 
 
 func validate_and_notify_target_pos() -> void:
@@ -330,10 +374,14 @@ func execute_teleport(target_world_pos: Vector2) -> void:
 		return
 
 	var start_pos := global_position
+	
+	spawn_independent_dust(teleport_start_dust, start_pos)
 	spawn_teleport_ghost_line(start_pos, clamped_pos)
 	
 	global_position = clamped_pos
 	velocity = Vector2.ZERO
+	
+	spawn_independent_dust(teleport_end_dust, clamped_pos)
 	spawn_ghost_trail()
 	
 	can_teleport = false
@@ -356,10 +404,13 @@ func execute_teleport(target_world_pos: Vector2) -> void:
 		if is_instance_valid(music_player) and "pitch_scale" in music_player:
 			camera_tween.tween_property(music_player, "pitch_scale", 1.0, 0.15)
 		
-	animated_sprite_2d.modulate = Color.WHITE
+	if is_instance_valid(animated_sprite_2d):
+		animated_sprite_2d.modulate = Color.WHITE
 
 
 func spawn_teleport_ghost_line(from_pos: Vector2, to_pos: Vector2) -> void:
+	if not is_instance_valid(animated_sprite_2d) or not animated_sprite_2d.sprite_frames:
+		return
 	var dist := from_pos.distance_to(to_pos)
 	var steps := int(dist / teleport_ghost_spacing)
 	steps = clamp(steps, 2, 25)
@@ -379,11 +430,11 @@ func spawn_teleport_ghost_line(from_pos: Vector2, to_pos: Vector2) -> void:
 		ghost.global_position = spawn_pos
 		ghost.z_index = z_index - 1
 		
-		ghost.modulate = Color(0.5, 0.4, 1.0, lerp(0.3, 0.7, t))
-		get_parent().add_child(ghost)
+		ghost.modulate = Color(0.5, 0.4, 1.0, lerp(0.5, 0.8, t))
+		get_tree().current_scene.add_child(ghost)
 		
 		var tween := create_tween()
-		tween.tween_property(ghost, "modulate:a", 0.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(ghost, "modulate:a", 0.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		tween.tween_callback(ghost.queue_free)
 
 
@@ -403,8 +454,12 @@ func dash_logic(delta: float) -> void:
 		dash_dir = move_input.normalized()
 		Last_direction = dash_dir
 		velocity = dash_dir * dash_speed
-		player_dash_sound.pitch_scale = randf_range(2.0, 3.3)
-		player_dash_sound.play()
+		
+		spawn_independent_dust(dash_dust, global_position + Vector2(0, 10))
+		
+		if is_instance_valid(player_dash_sound):
+			player_dash_sound.pitch_scale = randf_range(2.0, 3.3)
+			player_dash_sound.play()
 		
 		apply_camera_shake(dash_camera_shake)
 		trigger_dash_juice(dash_dir)
@@ -426,8 +481,9 @@ func dash_logic(delta: float) -> void:
 		if dash_timer <= 0.0:
 			dash_timer = 0.0
 			enemies_hit_ids.clear()
-			animated_sprite_2d.speed_scale = 1.0
-			animated_sprite_2d.scale = Vector2.ONE
+			if is_instance_valid(animated_sprite_2d):
+				animated_sprite_2d.speed_scale = 1.0
+				animated_sprite_2d.scale = Vector2.ONE
 	else:
 		if dash_reload_timer > 0.0:
 			dash_reload_timer -= delta
@@ -442,6 +498,8 @@ func dash_logic(delta: float) -> void:
 
 
 func check_dash_collisions() -> void:
+	if not is_instance_valid(hit_box):
+		return
 	var bodies := hit_box.get_overlapping_bodies()
 	for body in bodies:
 		if is_instance_valid(body) and body is BaseEnemy:
@@ -454,6 +512,8 @@ func check_dash_collisions() -> void:
 
 
 func trigger_dash_juice(dir: Vector2) -> void:
+	if not is_instance_valid(animated_sprite_2d):
+		return
 	animated_sprite_2d.speed_scale = 2.4
 	
 	var tween := create_tween()
@@ -468,16 +528,22 @@ func trigger_dash_juice(dir: Vector2) -> void:
 func apply_camera_shake(intensity: float) -> void:
 	if not camera_2d:
 		return
-	var shake_tween := create_tween()
-	var offset1 := Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
-	var offset2 := Vector2(randf_range(-intensity * 0.5, intensity * 0.5), randf_range(-intensity * 0.5, intensity * 0.5))
+	var shake_tween := create_tween().set_parallel(false)
 	
-	shake_tween.tween_property(camera_2d, "offset", offset1, 0.03)
-	shake_tween.tween_property(camera_2d, "offset", offset2, 0.04)
-	shake_tween.tween_property(camera_2d, "offset", Vector2.ZERO, 0.04)
+	# اهتزازات عنيفة ومتعددة لزيادة قوة التأثير البصري
+	var offset1 := Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
+	var offset2 := Vector2(randf_range(-intensity * 0.75, intensity * 0.75), randf_range(-intensity * 0.75, intensity * 0.75))
+	var offset3 := Vector2(randf_range(-intensity * 0.4, intensity * 0.4), randf_range(-intensity * 0.4, intensity * 0.4))
+	
+	shake_tween.tween_property(camera_2d, "offset", offset1, 0.02)
+	shake_tween.tween_property(camera_2d, "offset", offset2, 0.02)
+	shake_tween.tween_property(camera_2d, "offset", offset3, 0.03)
+	shake_tween.tween_property(camera_2d, "offset", Vector2.ZERO, 0.03)
 
 
 func spawn_ghost_trail() -> void:
+	if not is_instance_valid(animated_sprite_2d) or not animated_sprite_2d.sprite_frames:
+		return
 	var ghost := Sprite2D.new()
 	
 	var current_anim: StringName = animated_sprite_2d.animation
@@ -490,7 +556,7 @@ func spawn_ghost_trail() -> void:
 	ghost.z_index = z_index - 1
 	
 	ghost.modulate = ghost_color
-	get_parent().add_child(ghost)
+	get_tree().current_scene.add_child(ghost)
 	
 	var tween := create_tween()
 	tween.tween_property(ghost, "modulate:a", 0.0, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -529,7 +595,7 @@ func Process_movement() -> void:
 
 # Player Animations
 func Process_animation() -> void:
-	if Is_attacking:
+	if Is_attacking or not is_instance_valid(animated_sprite_2d):
 		return
 
 	var actual_speed_sq := get_real_velocity().length_squared()
@@ -540,6 +606,8 @@ func Process_animation() -> void:
 
 
 func Play_animation(prefix: String, dir: Vector2) -> void:
+	if not is_instance_valid(animated_sprite_2d):
+		return
 	var x := Hitbox_offset.x
 	var y := Hitbox_offset.y
 	var anim_to_play := ""
@@ -548,17 +616,21 @@ func Play_animation(prefix: String, dir: Vector2) -> void:
 		anim_to_play = prefix + "_Right"
 		if dir.x < 0:
 			animated_sprite_2d.flip_h = true
-			hit_box.position = Vector2(-x + 12, y)
+			if is_instance_valid(hit_box):
+				hit_box.position = Vector2(-x + 12, y)
 		elif dir.x > 0:
 			animated_sprite_2d.flip_h = false
-			hit_box.position = Vector2(x, y)
+			if is_instance_valid(hit_box):
+				hit_box.position = Vector2(x, y)
 	else:
 		if dir.y > 0:
 			anim_to_play = prefix + "_Down"
-			hit_box.position = Vector2(-y, x - 13)
+			if is_instance_valid(hit_box):
+				hit_box.position = Vector2(-y, x - 13)
 		elif dir.y < 0:
 			anim_to_play = prefix + "_Up"
-			hit_box.position = Vector2(-y, -x)
+			if is_instance_valid(hit_box):
+				hit_box.position = Vector2(-y, -x)
 
 	if animated_sprite_2d.animation != anim_to_play or not animated_sprite_2d.is_playing():
 		animated_sprite_2d.play(anim_to_play)
@@ -574,13 +646,16 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func Attack() -> void:
 	Is_attacking = true
 	enemies_hit_during_attack.clear()
-	swing_sword_sound.pitch_scale = randf_range(2.0, 3.3)
-	swing_sword_sound.play()
+	if is_instance_valid(swing_sword_sound):
+		swing_sword_sound.pitch_scale = randf_range(2.0, 3.3)
+		swing_sword_sound.play()
 	Play_animation("Attack", Last_direction)
 	check_attack_collisions()
 
 
 func check_attack_collisions() -> void:
+	if not is_instance_valid(hit_box):
+		return
 	var bodies := hit_box.get_overlapping_bodies()
 	for body in bodies:
 		damage_enemy_with_sword(body)
@@ -624,22 +699,29 @@ func take_damage(amount: int) -> void:
 		return
 		
 	if alive:
-		if damage_cool_down.time_left > 0:
+		if is_instance_valid(damage_cool_down) and damage_cool_down.time_left > 0:
 			return
 		health = maxi(0, health - amount)
-		take_damage_sound.pitch_scale = randf_range(0.9, 1.1)
-		take_damage_sound.play()
+		if is_instance_valid(take_damage_sound):
+			take_damage_sound.pitch_scale = randf_range(0.9, 1.1)
+			take_damage_sound.play()
 		Player_stats.health = health
 		health_changed.emit(health, max_health)
+		
+		# استخدام المتغير الجديد للتحكم في شدة الاهتزاز من الـ Inspector
+		apply_camera_shake(damage_camera_shake)
 		
 		flash_hit()
 		
 		if health <= 0:
 			die()
-		damage_cool_down.start()
+		if is_instance_valid(damage_cool_down):
+			damage_cool_down.start()
 
 
 func flash_hit() -> void:
+	if not is_instance_valid(animated_sprite_2d):
+		return
 	if flash_tween and flash_tween.is_valid():
 		flash_tween.kill()
 		
@@ -726,14 +808,17 @@ func apply_upgrade(upgrade: Dictionary) -> void:
 func die() -> void:
 	if flash_tween and flash_tween.is_valid():
 		flash_tween.kill()
-	if animated_sprite_2d.material is ShaderMaterial:
+	if is_instance_valid(animated_sprite_2d) and animated_sprite_2d.material is ShaderMaterial:
 		(animated_sprite_2d.material as ShaderMaterial).set_shader_parameter("flash_red", false)
-	animated_sprite_2d.modulate = Color.WHITE
+	if is_instance_valid(animated_sprite_2d):
+		animated_sprite_2d.modulate = Color.WHITE
 
 	Engine.time_scale = 1.0
 	get_tree().call_group("HUD", "set_tactical_mode", false, slowmo_timescale)
 	_reset_music_pitch()
-	animated_sprite_2d.play("Die")
+	if is_instance_valid(animated_sprite_2d):
+		animated_sprite_2d.play("Die")
 	alive = false
-	await animated_sprite_2d.animation_finished
+	if is_instance_valid(animated_sprite_2d):
+		await animated_sprite_2d.animation_finished
 	died.emit()

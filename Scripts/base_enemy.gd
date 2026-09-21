@@ -58,6 +58,7 @@ var health_pickup_scene = preload("res://Scenes/health_pickup.tscn")
 @onready var attack_timer: Timer = get_node_or_null("AttackTimer")
 @onready var shadow: Sprite2D = get_node_or_null("Shadow")
 @onready var footstep_audio: AudioStreamPlayer2D = get_node_or_null("FootstepAudio")
+@onready var blood_spatter: CPUParticles2D = get_node_or_null("BloodSpatter")
 
 var flash_tween: Tween = null
 
@@ -292,6 +293,25 @@ func Take_damage(damage: int, attacker_position: Vector2 = Vector2.ZERO) -> void
 	health = maxi(0, health - damage)
 	flash_hit()
 
+	# Spawn independent world blood spatter scaled dynamically by damage amount
+	if is_instance_valid(blood_spatter):
+		var blood_copy := blood_spatter.duplicate() as CPUParticles2D
+		get_tree().current_scene.add_child(blood_copy)
+		blood_copy.global_position = global_position
+		
+		# Scale particle amount dynamically based on damage
+		blood_copy.amount = clampi(int(damage * 1.5), 8, 50)
+		
+		blood_copy.modulate.a = 1.0
+		blood_copy.restart()
+		blood_copy.emitting = true
+		
+		# Smoothly fade out alpha and clean up when finished
+		var fade_tween := create_tween()
+		fade_tween.tween_interval(blood_copy.lifetime * 0.6)
+		fade_tween.tween_property(blood_copy, "modulate:a", 0.0, blood_copy.lifetime * 0.4)
+		fade_tween.tween_callback(blood_copy.queue_free)
+
 	if attacker_position != Vector2.ZERO:
 		var knock_dir := (global_position - attacker_position).normalized()
 		knockback_velocity = knock_dir * (knockback_force * 3.5)
@@ -392,7 +412,6 @@ func drop_key() -> void:
 	key_inst.position = global_position
 	key_inst.z_index = 10
 
-	# Add directly to the level or parent scene
 	var level_root = get_tree().root.find_child("LevelRoot", true, false)
 	if level_root:
 		var items_node = level_root.get_node_or_null("Items")
