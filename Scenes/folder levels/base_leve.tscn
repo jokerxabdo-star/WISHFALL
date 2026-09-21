@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://dlcpl646q6oql"]
 
 [ext_resource type="Script" uid="uid://bya826q2wgj0d" path="res://Scripts/base_leve.gd" id="1_dwvty"]
-[ext_resource type="Texture2D" uid="uid://cck5xx6gxblni" path="res://Assets/Images/Tileset/Path_Tile.png" id="1_r3gm8"]
-[ext_resource type="Texture2D" uid="uid://c780qvjxul56g" path="res://Assets/Images/Tileset/Grass_Middle.png" id="2_6jeqd"]
 [ext_resource type="PackedScene" uid="uid://bsyychx37m0q8" path="res://Scenes/player.tscn" id="2_ud2dl"]
 [ext_resource type="Texture2D" uid="uid://b525m8xb4rlf8" path="res://Assets/Images/Tileset/Water_Tile.png" id="3_dwvty"]
 [ext_resource type="Texture2D" uid="uid://df6xkg2c5owvw" path="res://Assets/Images/Tileset/Water_coasts_animation.png" id="4_hmuk3"]
@@ -11,29 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cxuaulvwuxve7" path="res://Scenes/exit.tscn" id="7_bqr30"]
 [ext_resource type="Texture2D" uid="uid://y4w8hws7fgop" path="res://Assets/Images/Tileset/decorative_cracks_walls.png" id="7_h4ivi"]
 [ext_resource type="Texture2D" uid="uid://djclt5jj4dtnh" path="res://Assets/Images/Tileset/walls_floor.png" id="8_wff0o"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j4d0u"]
-texture = ExtResource("1_r3gm8")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-0:5/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bqr30"]
-texture = ExtResource("2_6jeqd")
-0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ls2j4"]
 texture = ExtResource("4_hmuk3")
@@ -3059,8 +3034,6 @@ sources/10 = SubResource("TileSetAtlasSource_ls2j4")
 sources/6 = SubResource("TileSetAtlasSource_uxdok")
 sources/5 = SubResource("TileSetAtlasSource_yglmm")
 sources/12 = SubResource("TileSetAtlasSource_hxmil")
-sources/1 = SubResource("TileSetAtlasSource_bqr30")
-sources/0 = SubResource("TileSetAtlasSource_j4d0u")
 sources/3 = SubResource("TileSetAtlasSource_hmuk3")
 
 [node name="LevelRoot" type="Node2D" unique_id=168011183]

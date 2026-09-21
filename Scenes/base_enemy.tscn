@@ -50,3 +50,17 @@ stream = ExtResource("2_t2m80")
 max_distance = 600.0
 
 [node name="Enemy_HealthBar" parent="." unique_id=1802795097 instance=ExtResource("2_kjpuc")]
+
+[node name="BloodSpatter" type="CPUParticles2D" parent="." unique_id=952056516]
+emitting = false
+amount = 20
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 250)
+initial_velocity_min = 60.0
+initial_velocity_max = 140.0
+scale_amount_min = 10.0
+scale_amount_max = 17.0
+color = Color(0.7896973, 8.716479e-05, 0.15147755, 1)

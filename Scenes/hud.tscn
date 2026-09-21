@@ -152,7 +152,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 color = Color(0, 0, 0, 1)
 
-[node name="GameOver" type="Label" parent="." unique_id=2049621574]
+[node name="Finished" type="Label" parent="." unique_id=2049621574]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -164,7 +164,7 @@ offset_right = 399.0
 offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "GAME OVER"
+text = "Finished !"
 label_settings = SubResource("LabelSettings_fccik")
 horizontal_alignment = 1
 vertical_alignment = 1

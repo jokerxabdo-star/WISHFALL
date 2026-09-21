@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://0m4id3mopdgm"]
+
+[ext_resource type="Texture2D" uid="uid://cfplq5s1hq2uf" path="res://Assets/Images/FullMetal Studio.jpg" id="1_b226h"]
+[ext_resource type="Script" uid="uid://dc5eoio3asytk" path="res://Scripts/intro.gd" id="1_duh1u"]
+[ext_resource type="Texture2D" uid="uid://bi5flduo2s5ct" path="res://Assets/Materials/metallic_gradient.tres" id="3_alxvg"]
+[ext_resource type="AudioStream" uid="uid://dnwjp857xl51l" path="res://Assets/Audios/TeamLogoIntro.wav" id="4_hwjxs"]
+[ext_resource type="AudioStream" uid="uid://cmafkg2f6514g" path="res://Assets/Audios/GameLabelIntro.wav" id="5_rsiac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77wvw"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Intro" type="Control" unique_id=188555360]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_duh1u")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=29687005]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1012798727]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 9
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1563264287]
+clip_children = 2
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_77wvw")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer" unique_id=297844366]
+custom_minimum_size = Vector2(10, 10)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 2
+texture = ExtResource("1_b226h")
+
+[node name="Represents" type="Label" parent="VBoxContainer" unique_id=54331409]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.7204674, 0.72046757, 0.7204672, 1)
+theme_override_font_sizes/font_size = 16
+text = "Represents..."
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1492596263]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game Label" type="Label" parent="VBoxContainer2" unique_id=1795139242]
+clip_children = 2
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "WishFall"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer2/Game Label" unique_id=94269074]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_alxvg")
+
+[node name="CreatedFor" type="Label" parent="VBoxContainer2" unique_id=1141972610]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_font_sizes/font_size = 14
+text = "A part of the IEEE VICTORIS GameJam"
+
+[node name="LogoSound" type="AudioStreamPlayer" parent="." unique_id=1559086154]
+stream = ExtResource("4_hwjxs")
+volume_db = -3.0
+
+[node name="LabelSound" type="AudioStreamPlayer" parent="." unique_id=983974953]
+stream = ExtResource("5_rsiac")
+volume_db = -5.0

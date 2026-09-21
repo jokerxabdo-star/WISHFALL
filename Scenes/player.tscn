@@ -512,6 +512,8 @@ scale = Vector2(8, 8)
 collision_layer = 2
 script = ExtResource("1_cvnsp")
 tactical_zoom_factor = 0.5
+has_teleport = true
+has_dash = true
 dash_speed = 3500.0
 dash_duration = 0.3
 dash_camera_shake = 40.0
@@ -567,6 +569,58 @@ stream = ExtResource("8_8erm5")
 
 [node name="DamageCoolDown" type="Timer" parent="." unique_id=1805705316]
 one_shot = true
+
+[node name="MoveDust" type="CPUParticles2D" parent="." unique_id=2045091907]
+emitting = false
+amount = 16
+lifetime = 0.8
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, -40)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+scale_amount_min = 12.0
+scale_amount_max = 18.0
+color = Color(1.0550985, 1.0550985, 1.0550985, 1)
+
+[node name="DashDust" type="CPUParticles2D" parent="." unique_id=1576948273]
+emitting = false
+amount = 50
+lifetime = 0.8
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, -40)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+scale_amount_min = 12.0
+scale_amount_max = 20.0
+color = Color(0.62083673, 0.9986051, 1, 1)
+
+[node name="TeleportStartDust" type="CPUParticles2D" parent="." unique_id=667204949]
+emitting = false
+amount = 50
+lifetime = 0.8
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, -40)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+scale_amount_min = 12.0
+scale_amount_max = 20.0
+color = Color(0.62083673, 0.9986051, 1, 1)
+
+[node name="TeleportEndDust" type="CPUParticles2D" parent="." unique_id=1247708957]
+emitting = false
+amount = 50
+lifetime = 0.8
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, -40)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+scale_amount_min = 12.0
+scale_amount_max = 20.0
+color = Color(0.62083673, 0.9986051, 1, 1)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

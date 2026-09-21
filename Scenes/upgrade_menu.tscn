@@ -33,7 +33,7 @@ grow_vertical = 2
 theme_override_constants/separation = 100
 
 [node name="Card0" type="TextureButton" parent="CardContainer" unique_id=1846420788]
-custom_minimum_size = Vector2(180, 260)
+custom_minimum_size = Vector2(280, 360)
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="CardContainer/Card0" unique_id=1373536445]
@@ -42,7 +42,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Card1" type="TextureButton" parent="CardContainer" unique_id=1272815843]
-custom_minimum_size = Vector2(180, 260)
+custom_minimum_size = Vector2(280, 360)
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="CardContainer/Card1" unique_id=466587067]
@@ -51,7 +51,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Card2" type="TextureButton" parent="CardContainer" unique_id=1904371794]
-custom_minimum_size = Vector2(180, 260)
+custom_minimum_size = Vector2(280, 360)
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="CardContainer/Card2" unique_id=663432394]
