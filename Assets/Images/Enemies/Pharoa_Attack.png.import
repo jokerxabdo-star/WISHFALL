@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf4r8ow3beaji"
-path="res://.godot/imported/Tutorial.png-dae2183134267de0ea162291989b5da8.ctex"
+uid="uid://di746vgfr500k"
+path="res://.godot/imported/Pharoa_Attack.png-7bf3d3f26715fda76a2f270701f65eff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/Tutorial.png"
-dest_files=["res://.godot/imported/Tutorial.png-dae2183134267de0ea162291989b5da8.ctex"]
+source_file="res://Assets/Images/Enemies/Pharoa_Attack.png"
+dest_files=["res://.godot/imported/Pharoa_Attack.png-7bf3d3f26715fda76a2f270701f65eff.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf4r8ow3beaji"
-path="res://.godot/imported/Tutorial.png-dae2183134267de0ea162291989b5da8.ctex"
+uid="uid://b38c7j2tgmi8r"
+path="res://.godot/imported/Pharoa_Walk.png-bc2603bb85ce11f16964bd4327e6fb16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/Tutorial.png"
-dest_files=["res://.godot/imported/Tutorial.png-dae2183134267de0ea162291989b5da8.ctex"]
+source_file="res://Assets/Images/Enemies/Pharoa_Walk.png"
+dest_files=["res://.godot/imported/Pharoa_Walk.png-bc2603bb85ce11f16964bd4327e6fb16.ctex"]
 
 [params]
 

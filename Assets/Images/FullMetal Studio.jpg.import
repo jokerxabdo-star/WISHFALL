@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf4r8ow3beaji"
-path="res://.godot/imported/Tutorial.png-dae2183134267de0ea162291989b5da8.ctex"
+uid="uid://cfplq5s1hq2uf"
+path="res://.godot/imported/FullMetal Studio.jpg-e03c702fe75860bc38b1447f146e253e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/UI/Tutorial.png"
-dest_files=["res://.godot/imported/Tutorial.png-dae2183134267de0ea162291989b5da8.ctex"]
+source_file="res://Assets/Images/FullMetal Studio.jpg"
+dest_files=["res://.godot/imported/FullMetal Studio.jpg-e03c702fe75860bc38b1447f146e253e.ctex"]
 
 [params]
 
